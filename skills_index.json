@@ -18398,6 +18398,40 @@
     ]
   },
   {
+    "id": "curlshot",
+    "path": "skills/curlshot",
+    "category": "api-integration",
+    "name": "curlshot",
+    "description": "Capture web page screenshots, PDFs and scrolling videos, or render HTML/Markdown to images, with the hosted CurlShot API.",
+    "risk": "safe",
+    "source": "https://github.com/SergiuPogor/curlshot-mcp/tree/main/skills/curlshot",
+    "date_added": "2026-10-16",
+    "plugin": {
+      "targets": {
+        "codex": "supported",
+        "claude": "supported"
+      },
+      "setup": {
+        "type": "none",
+        "summary": "",
+        "docs": null
+      },
+      "reasons": []
+    },
+    "source_type": "official",
+    "source_repo": "SergiuPogor/curlshot-mcp",
+    "license": "MIT",
+    "license_source": "https://github.com/SergiuPogor/curlshot-mcp/blob/main/LICENSE",
+    "tags": [
+      "screenshot",
+      "pdf",
+      "html-to-image",
+      "headless-browser",
+      "api",
+      "mcp"
+    ]
+  },
+  {
     "id": "cursor-delegate",
     "path": "skills/cursor-delegate",
     "category": "agent-orchestration",

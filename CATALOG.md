@@ -2,7 +2,7 @@
 
 Generated at: 2026-10-16T11:41:20.000Z
 
-Total skills: 2705
+Total skills: 2706
 
 ## agent-behavior (5)
 
@@ -297,7 +297,7 @@ Total skills: 2705
 | `10-andruia-skill-smith` | Usar para crear o mejorar una skill de Andru.ia: define entradas y resultados, redacta SKILL.md con ejemplos y límites, valida la estructura y prepara una PR. | safe | personal | 10, andruia, skill, smith | 10, andruia, skill, smith, usar, para, crear, mejorar, una, de, andru, ia |
 | `20-andruia-niche-intelligence` | Usar tras definir el sector de un proyecto: prepara un dossier en español con contexto, normas aplicables, patrones UX y riesgos, distinguiendo fuentes verif... | safe | personal | 20, andruia, niche, intelligence | 20, andruia, niche, intelligence, usar, tras, definir, el, sector, de, un, proyecto |
 
-## api-integration (42)
+## api-integration (43)
 
 | Skill | Description | Risk | Source | Tags | Triggers |
 | --- | --- | --- | --- | --- | --- |
@@ -305,6 +305,7 @@ Total skills: 2705
 | `adhx` | Fetch any X/Twitter post as clean LLM-friendly JSON. Converts x.com, twitter.com, or adhx.com links into structured data with full article content, author in... | safe | community | adhx | adhx, fetch, any, twitter, post, clean, llm, friendly, json, converts, com, links |
 | `algolia-search` | Expert patterns for Algolia search implementation, indexing strategies, React InstantSearch, and relevance tuning | critical | vibeship-spawner-skills (Apache 2.0) | algolia, search | algolia, search, indexing, react, instantsearch, relevance, tuning |
 | `connection-auth-rules` | Build a Connection Auth Rules for a Monte Carlo connection type. Fetches live connector schemas and transform steps from the apollo-agent repo. | unknown | monte-carlo-data/mc-agent-toolkit | connection, auth, rules | connection, auth, rules, monte, carlo, type, fetches, live, connector, schemas, transform, steps |
+| `curlshot` | Capture web page screenshots, PDFs and scrolling videos, or render HTML/Markdown to images, with the hosted CurlShot API. | safe | SergiuPogor/curlshot-mcp | screenshot, pdf, html-to-image, headless-browser, api, mcp | screenshot, pdf, html-to-image, headless-browser, api, mcp, curlshot, capture, web, page, screenshots, pdfs |
 | `daily` | Documentation and capabilities reference for Daily | safe | community | daily | daily, documentation, capabilities, reference |
 | `discord-automation` | Automate Discord tasks via Rube MCP (Composio): messages, channels, roles, webhooks, reactions. Always search tools first for current schemas. | critical | community | discord | discord, automation, automate, tasks, via, rube, mcp, composio, messages, channels, roles, webhooks |
 | `famulor-skill` | Operate Famulor assistants, communication history, campaigns, knowledge, automations, telephony, and workspace administration through its hosted MCP server. | critical | bekservice/Famulor-Skill | famulor, mcp, voice-ai, communication, automation | famulor, mcp, voice-ai, communication, automation, skill, operate, assistants, history, campaigns, knowledge, automations |

@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-16T11:41:20.000Z",
-  "total": 2705,
+  "total": 2706,
   "skills": [
     {
       "id": "00-andruia-consultant",
@@ -21429,6 +21429,42 @@
         "survey"
       ],
       "path": "skills/culture-retention/SKILL.md"
+    },
+    {
+      "id": "curlshot",
+      "canonical_id": "curlshot",
+      "name": "curlshot",
+      "description": "Capture web page screenshots, PDFs and scrolling videos, or render HTML/Markdown to images, with the hosted CurlShot API.",
+      "category": "api-integration",
+      "risk": "safe",
+      "source": "https://github.com/SergiuPogor/curlshot-mcp/tree/main/skills/curlshot",
+      "source_type": "official",
+      "source_repo": "SergiuPogor/curlshot-mcp",
+      "license": "MIT",
+      "license_source": "https://github.com/SergiuPogor/curlshot-mcp/blob/main/LICENSE",
+      "tags": [
+        "screenshot",
+        "pdf",
+        "html-to-image",
+        "headless-browser",
+        "api",
+        "mcp"
+      ],
+      "triggers": [
+        "screenshot",
+        "pdf",
+        "html-to-image",
+        "headless-browser",
+        "api",
+        "mcp",
+        "curlshot",
+        "capture",
+        "web",
+        "page",
+        "screenshots",
+        "pdfs"
+      ],
+      "path": "skills/curlshot/SKILL.md"
     },
     {
       "id": "cursor-delegate",

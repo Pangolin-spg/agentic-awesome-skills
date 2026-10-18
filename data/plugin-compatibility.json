@@ -13653,6 +13653,25 @@
       "runtime_files": []
     },
     {
+      "id": "curlshot",
+      "path": "skills/curlshot",
+      "targets": {
+        "codex": "supported",
+        "claude": "supported"
+      },
+      "setup": {
+        "type": "none",
+        "summary": "",
+        "docs": null
+      },
+      "reasons": [],
+      "blocked_reasons": {
+        "codex": [],
+        "claude": []
+      },
+      "runtime_files": []
+    },
+    {
       "id": "cursor-delegate",
       "path": "skills/cursor-delegate",
       "targets": {
@@ -51890,10 +51909,10 @@
     }
   ],
   "summary": {
-    "total_skills": 2705,
+    "total_skills": 2706,
     "supported": {
-      "codex": 2620,
-      "claude": 2642
+      "codex": 2621,
+      "claude": 2643
     },
     "blocked": {
       "codex": 85,
