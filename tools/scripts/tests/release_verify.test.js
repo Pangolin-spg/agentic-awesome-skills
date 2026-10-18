@@ -92,7 +92,7 @@ const deps = {
     return JSON.stringify(result);
   },
   fetch: async (url) => {
-    if (url.includes("registry.npmjs.org"))
+    if (new URL(url).hostname === "registry.npmjs.org")
       return JSON.stringify({
         "dist-tags": { latest: badNpm ? "1.2.2" : version },
         versions: {
@@ -100,7 +100,7 @@ const deps = {
         },
       });
     if (url.endsWith("redirect-manifest.json")) return JSON.stringify(manifest);
-    if (url.startsWith("https://sickn33.github.io/"))
+    if (new URL(url).origin === "https://sickn33.github.io")
       return "https://aaskills.tech/";
     if (url.endsWith("/skills.json")) return index;
     if (url.endsWith("/plugins"))
