@@ -135,6 +135,22 @@ compliance. Recommend a follow-up query when evidence is incomplete.
   ASIN. Quote only short excerpts, separate review facts from interpretation,
   and list the review URLs or IDs supplied by the response."
 
+## Limitations
+
+- The bridge returns whatever the upstream service currently provides; missing
+  fields, empty results and rate limits are data gaps, not evidence about the
+  product or market.
+- Results are a point-in-time snapshot. Prices, ranks, availability and reviews
+  change, so a comparison is only valid for the same marketplace and retrieval
+  window.
+- Amazon data collection is subject to the provider's terms and to Amazon's
+  conditions. This skill does not authorize scraping beyond the documented
+  service or any use that violates them.
+- It cannot make purchasing, advertising or account decisions and does not
+  replace legal, tax or compliance review.
+- Requires the user's own Pangolinfo API key and available plan credits; without
+  the MCP bridge installed and authenticated the skill has nothing to call.
+
 ## Security and Data Boundaries
 
 - Credentials belong only in local secret storage. Never log, echo, commit, or
