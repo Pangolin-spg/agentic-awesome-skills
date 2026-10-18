@@ -364,6 +364,16 @@ jobs:
     needs: [pr-policy, source-validation]
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        if: env.IS_TRUSTED_CANONICAL_SYNC_PR != 'true'
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          sparse-checkout: tools/scripts/ci_artifact_preview.cjs
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        if: env.IS_TRUSTED_CANONICAL_SYNC_PR == 'true'
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
@@ -454,6 +464,7 @@ jobs:
       group: canonical-main-sync
       cancel-in-progress: false
     permissions:
+      deployments: read
       actions: write
       contents: write
       pull-requests: write
@@ -463,23 +474,34 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Check current main and batch lease
+        id: batch_guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/scripts/canonical_batch.cjs check
+
       - name: Set up Python
+        if: steps.batch_guard.outputs.should_run == 'true'
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.10"
 
       - name: Install Python dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: pip install -r tools/requirements.txt
 
       - name: Set up Node
+        if: steps.batch_guard.outputs.should_run == 'true'
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "lts/*"
 
       - name: Install npm dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm ci --audit=false
 
       - name: Verify directory structure
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: |
           test -d skills/
           test -d apps/web-app/
@@ -489,14 +511,17 @@ jobs:
           test -f CONTRIBUTING.md
 
       - name: Run repo-state sync
+        if: steps.batch_guard.outputs.should_run == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: npm run sync:repo-state
 
       - name: Validate references
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm run validate:references
 
       - name: Audit npm dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: |
           set -euo pipefail
           for attempt in 1 2 3; do
@@ -511,19 +536,30 @@ jobs:
           done
 
       - name: Run tests
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm run test
 
       - name: Install web-app dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm run app:install
 
       - name: Run web app coverage
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm run app:test:coverage
 
       - name: Run docs security checks
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm run security:docs
 
+      - name: Recheck canonical publication lease
+        if: steps.batch_guard.outputs.should_run == 'true'
+        id: publication_guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/scripts/canonical_batch.cjs check
+
       - name: Validate canonical artifact boundary
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.publication_guard.outputs.should_run == 'true' && (github.ref == 'refs/heads/main')
         run: |
           set -euo pipefail
           mapfile -t managed_files < <(node tools/scripts/generated_files.js --include-mixed)
@@ -552,14 +588,14 @@ jobs:
           fi
 
       - name: Reject stale canonical-sync publication
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.publication_guard.outputs.should_run == 'true' && (github.ref == 'refs/heads/main')
         run: |
           git fetch origin main
           test "$GITHUB_SHA" = "$(git rev-parse origin/main)"
 
       - name: Create or update canonical-sync PR
         id: canonical_pr
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.publication_guard.outputs.should_run == 'true' && (github.ref == 'refs/heads/main')
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ github.token }}
@@ -580,7 +616,7 @@ jobs:
             - [x] No source or workflow changes are included.
 
       - name: Merge canonical-sync PR after exact required checks
-        if: steps.canonical_pr.outputs.pull-request-number != ''
+        if: steps.publication_guard.outputs.should_run == 'true' && (steps.canonical_pr.outputs.pull-request-number != '')
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ steps.canonical_pr.outputs.pull-request-number }}
@@ -593,7 +629,7 @@ jobs:
             --skip-pages
 
       - name: Check for uncommitted drift
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.publication_guard.outputs.should_run == 'true' && (github.ref == 'refs/heads/main')
         run: |
           if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
             echo "❌ Detected leftover drift after preparing the canonical-sync PR."

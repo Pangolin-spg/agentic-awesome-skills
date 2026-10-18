@@ -57,3 +57,7 @@ npm run maintainer:sweep -- --benchmark
 4. Wait for `automation/canonical-repo-state` once after the source batch
 
 See also [`jev-hints.md`](jev-hints.md) and [`merge-batch.md`](merge-batch.md).
+
+## Operational reports and bounded batch coordination
+
+See [maintainer flow](maintainer-flow.md) for exact-head batch preparation, one-hour convergence leases and recovery, text LICENSE policy, source-credit generation, complete local preflight, review dossiers and release observations. These reports never replace protected checks or semantic review.

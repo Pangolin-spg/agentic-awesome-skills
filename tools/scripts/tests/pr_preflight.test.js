@@ -64,6 +64,8 @@ const result = spawnSync(
 assert.strictEqual(result.status, 0, result.stderr || result.stdout);
 
 const parsed = JSON.parse(result.stdout);
+assert.match(parsed.headOid, /^[a-f0-9]{40}$/);
+assert.strictEqual(parsed.baseOid, parsed.headOid);
 assert.strictEqual(parsed.prBody.available, true);
 assert.strictEqual(parsed.prBody.hasQualityChecklist, true);
 assert.strictEqual(parsed.forkSafety.applicable, false);

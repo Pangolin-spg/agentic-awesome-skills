@@ -267,10 +267,12 @@ npm test
 
 For **any normal community PR**, keep the branch source-only and leave generated registry artifacts out of the diff. `main` canonicalizes those after merge.
 
-Optional maintainer-style preflight:
+Complete local preflight (validation, references when needed, docs security, source-credit preview, and all local tests):
 
 ```bash
 npm run pr:preflight
+# Machine-readable results and individual check outcomes:
+npm run pr:preflight -- --json
 ```
 
 Python-only fallback:
@@ -552,3 +554,5 @@ We **always merge accepted PRs via GitHub** ("Squash and merge") so your PR show
 **Thank you for making this project better for everyone!**
 
 Every contribution, no matter how small, makes a difference. Whether you fix a typo, improve a sentence, or create a whole new skill - you're helping thousands of developers!
+
+External-source attribution is generated from reviewed `source_repo` / `source_type` metadata. Keep ordinary imports focused on their skill directory; use `data/source-credits.json` only for custom editorial credit text or historical corrections. See [maintainer flow](docs/maintainers/maintainer-flow.md).

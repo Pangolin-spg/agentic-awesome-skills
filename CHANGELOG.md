@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Changed
+
+- Maintainer flow now distinguishes actionable PR blockers, prepares selected exact-head workflows before ordered merges, and coordinates canonical synchronization through a bounded batch lease with recovery.
+- Local preflight includes docs security and source attribution; text-only skill-root LICENSE files receive bounded blob validation, while bundle dossiers preserve explicit review requirements.
+- Source attribution is generated from reviewed metadata plus a legacy-preserving editorial ledger. Release plans and fresh verification reports expose stale candidates, publication drift and native-client confirmation boundaries.
+
 ## [19.8.0] - 2026-10-16 - "Fifteen Reviewed Additions And A Healthier Review Lane"
 
 > Adds **15** catalog skills, updates **mmx-cli**, and ships **2,705** skills. Every external contribution in this release went through an individual maintainer review bound to its exact content, and the fork review lane records eight additional explicitly reviewed skill bundles.

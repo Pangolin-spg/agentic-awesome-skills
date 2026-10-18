@@ -100,3 +100,7 @@ Each phase requires evidence from the previous phase before activation:
 7. Consider auto-merge only for empirically proven documentation or metadata classes. New skills, security-sensitive content, workflows, installers, releases, provenance exceptions, and policy changes remain human decisions.
 
 Merge queue is not part of the current plan. The repository is personally owned, and its workflows do not currently support a `merge_group` event.
+
+## Operational reports and bounded batch coordination
+
+See [maintainer flow](maintainer-flow.md) for exact-head batch preparation, one-hour convergence leases and recovery, text LICENSE policy, source-credit generation, complete local preflight, review dossiers and release observations. These reports never replace protected checks or semantic review.
