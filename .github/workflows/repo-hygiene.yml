@@ -6,6 +6,7 @@ on:
     - cron: "0 7 * * 1"
 
 permissions:
+  deployments: read
   actions: write
   contents: write
   pull-requests: write
@@ -23,32 +24,52 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Check current main and batch lease
+        id: batch_guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/scripts/canonical_batch.cjs check
+
       - name: Set up Python
+        if: steps.batch_guard.outputs.should_run == 'true'
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.10"
 
       - name: Install Python dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: pip install -r tools/requirements.txt
 
       - name: Set up Node
+        if: steps.batch_guard.outputs.should_run == 'true'
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "lts/*"
           cache: "npm"
 
       - name: Install npm dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm ci
 
       - name: Audit npm dependencies
+        if: steps.batch_guard.outputs.should_run == 'true'
         run: npm audit --audit-level=high
 
       - name: Run repo-state sync
+        if: steps.batch_guard.outputs.should_run == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: npm run sync:repo-state
 
+      - name: Recheck canonical publication lease
+        if: steps.batch_guard.outputs.should_run == 'true'
+        id: publication_guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/scripts/canonical_batch.cjs check
+
       - name: Validate canonical artifact boundary
+        if: steps.publication_guard.outputs.should_run == 'true'
         run: |
           set -euo pipefail
 
@@ -78,11 +99,13 @@ jobs:
           fi
 
       - name: Reject stale canonical-sync publication
+        if: steps.publication_guard.outputs.should_run == 'true'
         run: |
           git fetch origin main
           test "$GITHUB_SHA" = "$(git rev-parse origin/main)"
 
       - name: Create or update canonical-sync PR
+        if: steps.publication_guard.outputs.should_run == 'true'
         id: canonical_pr
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
@@ -104,7 +127,7 @@ jobs:
             - [x] No source or workflow changes are included.
 
       - name: Merge canonical-sync PR after exact required checks
-        if: steps.canonical_pr.outputs.pull-request-number != ''
+        if: steps.publication_guard.outputs.should_run == 'true' && (steps.canonical_pr.outputs.pull-request-number != '')
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ steps.canonical_pr.outputs.pull-request-number }}

@@ -75,3 +75,7 @@ or PR-controlled ledger is authorized.
 - `npm run maintainer:jev-hints` evaluates skill content from the `--head` git ref via `git show`; pass `--repo` with a PR worktree when changed skills are not present on the current checkout.
 - Jev hints default to five skills per run, exit 0 with a skip message when `TYPESAFE_API_KEY` is unset, and never satisfy Tessl or `--reviewed-head` skill review.
 - Maintainer documentation for Jev lives in `docs/maintainers/jev-hints.md`; the upstream TypeSafe agent skill is installed under `.agents/skills/typesafe-ai/` via `npx skills add typesafe-ai/skills --skill typesafe-ai`.
+
+### Maintainer batch coordination and attribution
+
+Use the canonical maintainer skill and [maintainer flow](docs/maintainers/maintainer-flow.md) for `--prepare-only`, bounded deployment leases/recovery, textual skill-root LICENSE files, `maintainer:dossier`, `release:plan` and `release:verify`. README source-credit blocks are generated from reviewed frontmatter plus the editorial `data/source-credits.json` ledger and converge through the protected canonical PR. Reports never authorize a merge, release or client-configuration change. Update implementation, documentation, canonical skill and negative regressions together.

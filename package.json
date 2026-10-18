@@ -32,7 +32,7 @@
     "chain": "npm run validate && npm run plugin-compat:sync && npm run index && npm run bundles:sync && npm run sync:metadata && npm run catalog && npm run build:aas-v1-catalog",
     "sync:all": "npm run chain",
     "sync:release-state": "npm run chain && npm run sync:web-assets && npm run audit:consistency && npm run check:warning-budget",
-    "sync:repo-state": "npm run chain && npm run sync:web-assets && npm run sync:contributors && npm run sync:top-contributors && npm run audit:consistency && npm run check:warning-budget",
+    "sync:repo-state": "npm run chain && npm run sync:web-assets && npm run sync:source-credits && npm run sync:contributors && npm run sync:top-contributors && npm run audit:consistency && npm run check:warning-budget",
     "sync:repo-state:full": "npm run sync:repo-state && npm run sync:github-about && npm run audit:consistency:github",
     "catalog": "node tools/scripts/build-catalog.js",
     "build": "npm run chain",
@@ -83,7 +83,12 @@
     "plugin:install": "npm --prefix apps/aas-plugin ci --ignore-scripts",
     "plugin:test": "npm --prefix apps/aas-plugin test",
     "plugin:build": "npm --prefix apps/web-app run build:plugin-ui",
-    "plugin:package": "node apps/aas-plugin/scripts/package.mjs"
+    "plugin:package": "node apps/aas-plugin/scripts/package.mjs",
+    "sync:source-credits": "node tools/scripts/run-python.js tools/scripts/sync_source_credits.py",
+    "check:source-credits": "npm run sync:source-credits -- --check",
+    "release:plan": "node tools/scripts/release_inspect.cjs plan",
+    "release:verify": "node tools/scripts/release_inspect.cjs verify",
+    "maintainer:dossier": "node tools/scripts/maintainer_dossier.cjs"
   },
   "dependencies": {
     "ajv": "^8.20.0",

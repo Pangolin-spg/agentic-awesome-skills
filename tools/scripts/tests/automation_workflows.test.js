@@ -193,7 +193,7 @@ assert.match(
 );
 assert.match(
   ciWorkflow,
-  /main-validation-and-sync:[\s\S]*?- name: Install npm dependencies\n\s+run: npm ci --audit=false[\s\S]*?- name: Audit npm dependencies[\s\S]*?for attempt in 1 2 3; do[\s\S]*?npm audit --audit-level=high --fetch-timeout=60000 --fetch-retries=0[\s\S]*?if \[ "\$attempt" -eq 3 \]; then\n\s+exit 1/,
+  /main-validation-and-sync:[\s\S]*?- name: Install npm dependencies\n\s+(?:if: [^\n]+\n\s+)?run: npm ci --audit=false[\s\S]*?- name: Audit npm dependencies[\s\S]*?for attempt in 1 2 3; do[\s\S]*?npm audit --audit-level=high --fetch-timeout=60000 --fetch-retries=0[\s\S]*?if \[ "\$attempt" -eq 3 \]; then\n\s+exit 1/,
   "main CI should avoid a redundant install-time audit and keep three bounded explicit audit attempts fail-closed",
 );
 const ciInstallCommands = ciWorkflow.match(/npm ci[^\n]*/g) || [];

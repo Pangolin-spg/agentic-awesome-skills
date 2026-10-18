@@ -110,3 +110,7 @@ Stop and switch to the manual playbook when:
 - effective strict protection for `main` cannot be proven
 
 In those cases, follow [Merging Pull Requests](merging-prs.md) and the relevant sections in [MAINTENANCE.md](../../.github/MAINTENANCE.md).
+
+## Operational reports and bounded batch coordination
+
+See [maintainer flow](maintainer-flow.md) for exact-head batch preparation, one-hour convergence leases and recovery, text LICENSE policy, source-credit generation, complete local preflight, review dossiers and release observations. These reports never replace protected checks or semantic review.
